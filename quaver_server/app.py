@@ -34,7 +34,7 @@ from qqmusic_api.models.login import QR
 from qqmusic_api.modules.login import QRLoginType
 from qqmusic_api.modules.song import SongFileInfo
 
-from quaver_server.session import credential_has_login, self_euin, session
+from quaver_server.session import credential_has_login, credential_mode, self_euin, session
 from quaver_server.streaming import resolve_stream, serve_stream, tiers_async
 from typhoeus.errors import TyphoeusError
 
@@ -303,7 +303,9 @@ async def login_status():
     cred = session.credential
     logged_in = credential_has_login(cred)
     expired = logged_in and cred.is_expired()
-    return ok({"logged_in": logged_in, "expired": expired,
+    # credential_mode：external=凭证交给 Electron 主进程（系统密钥管理器加密）；memory=只驻内存、
+    # 关掉即需重新登录。只报模式（不报后端名 —— 那是主进程侧才知道的事），便于手工 curl 确认。
+    return ok({"logged_in": logged_in, "expired": expired, "credential_mode": credential_mode(),
                "credential": jsonable_credential(cred) if logged_in else None})
 
 
