@@ -2,12 +2,13 @@
   "name": "quaver-mpris",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
   "description": "Quaver 的 MPRIS 2.0 守护进程 — mpris-service(D-Bus) + stdio JSON IPC（与 Electron 主进程对接）",
   "type": "commonjs",
   "main": "dist/mpris-daemon.cjs",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "npm run typecheck && esbuild src/main.ts --bundle --platform=node --format=cjs --target=node22 --external:x11 --outfile=dist/mpris-daemon.cjs"
+    "build": "pnpm run typecheck && esbuild src/main.ts --bundle --platform=node --format=cjs --target=node22 --external:x11 --outfile=dist/mpris-daemon.cjs"
   },
   "dependencies": {
     "mpris-service": "^2.1.2"
@@ -17,7 +18,9 @@
     "esbuild": "^0.25.0",
     "typescript": "^7.0.2"
   },
-  "allowScripts": {
-    "esbuild": true
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

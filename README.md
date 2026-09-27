@@ -92,7 +92,7 @@ typhoeus/
 
 Linux 桌面媒体键 / 播放器小部件（KDE Plasma 通知与全局键、playerctl、GNOME
 扩展等）通过 MPRIS 2.0 D-Bus 协议控制 Quaver。`mpris/` 是独立 TS 子项目
-（npm + esbuild 打包为单文件 CJS），基于 [mpris-service](https://github.com/dbusjs/mpris-service)
+（pnpm + esbuild 打包为单文件 CJS），基于 [mpris-service](https://github.com/dbusjs/mpris-service)
 （dbus-next），总线名 `org.mpris.MediaPlayer2.quaver`，导出
 `MediaPlayer2` + `Player` + `TrackList` 三个接口。
 
@@ -121,7 +121,7 @@ seek/seekTo/jump/openUri）。`mpris:trackid` = `/org/quaver/track/<key 安全�
 ## 构建与测试
 
 ```sh
-cd mpris && npm install && npm run build   # → dist/mpris-daemon.cjs（自包含，仅 x11 外置且永不加载）
+cd mpris && pnpm install && pnpm run build   # → dist/mpris-daemon.cjs（自包含，仅 x11 外置且永不加载）
 node test/e2e.mjs                          # 需活动 D-Bus 会话总线：14 项断言（属性/方法/信号/回推 cmd）
 ```
 
