@@ -458,6 +458,18 @@ async def songlist_unlike(songlist_id: int):
     return ok(await call(lambda: session.client.user.unfav_songlist(songlist_id), need_login=True))
 
 
+@app.delete("/songlist/{dirid}")
+async def songlist_delete(dirid: int):
+    """删除自建歌单（PlaylistBaseWrite DelPlaylist，仅自建歌单可删）.
+
+    注意 dirid ≠ disstid：这里要的是歌单目录 ID（created-songlists 列表项的 dirid），
+    不是歌单 tid；删别人的/不存在的歌单上游会报错。上游 retCode≠0 直接抛
+    CgiApiException（见 core/response.py），能走到这里就是删成功了。
+    """
+    resp = await call(lambda: session.client.songlist.delete(dirid), need_login=True)
+    return ok({"ok": resp.retCode == 0})
+
+
 @app.get("/songlist/fav/check")
 async def songlist_fav_check():
     """已收藏的他人公开歌单 ID 集合（收藏态徽章数据源）."""
