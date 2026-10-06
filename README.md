@@ -132,4 +132,4 @@ node test/e2e.mjs                          # 需活动 D-Bus 会话总线：14 �
 
 # 协议
 
-该项目使用 AGPLv3 及其未来版本协议协议
+该项目使用 AGPLv3-Only 协议
